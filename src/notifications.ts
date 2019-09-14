@@ -9,9 +9,7 @@ export const askForPermissioToReceiveNotifications = () => {
   Notification.requestPermission().then(permission => {
     if (permission === 'granted') {
       console.log('Notification permission granted.');
-      debugger
       messaging.getToken().then(token => {
-        debugger
         console.log(token)
       }).catch(() => {
         console.log('ssssssssssssssssssssssssssssss')
@@ -23,7 +21,7 @@ export const askForPermissioToReceiveNotifications = () => {
   })
 }
 
-const s = firebase.initializeApp({
+firebase.initializeApp({
     apiKey: "AIzaSyAZ4QnplsUIAHZR0SxP7GiobHXpB3_sXUY",
     authDomain: "megalodon-a76cd.firebaseapp.com",
     databaseURL: "https://megalodon-a76cd.firebaseio.com",
@@ -33,8 +31,8 @@ const s = firebase.initializeApp({
     appId: "1:680495446953:web:895c9dcabc82d19f27a2b8"
 })
 
-console.log(s)
 
-export function f() {
-    // navigator.serviceWorker.register('./firebase-messaging-sw.js')
-}
+navigator.serviceWorker.register('./sw.js')
+  .then((registration) => {
+    firebase.messaging().useServiceWorker(registration)
+})
