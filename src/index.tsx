@@ -18,31 +18,30 @@ function App() {
 
     const [aqi, setAqi] = React.useState(50)
     React.useEffect(() => {
-		firebase.firestore().collection('measurements').onSnapshot((snapshot) => {
+        firebase.firestore().collection('measurements').onSnapshot((snapshot) => {
 
-			let c
-			let time = Infinity
-			snapshot.forEach(doc => {
-				if (Math.abs(DateTime.fromISO(doc.id).diffNow()) < time) {
-					time = Math.abs(DateTime.fromISO(doc.id).diffNow())
-					c = doc.data()
-				}
-			})
-			console.log(c)
-			setAqi(c.agi)
-		})
+            let c
+            let time = Infinity
+            snapshot.forEach(doc => {
+                if (Math.abs(DateTime.fromISO(doc.id).diffNow()) < time) {
+                    time = Math.abs(DateTime.fromISO(doc.id).diffNow())
+                    c = doc.data()
+                }
+            })
+            console.log(c)
+            setAqi(c.agi)
+        })
         console.log('runs on create')
     }, [])
 
     return <div className="layout-main">
-        <div className="column">
+        <div className="flex">
             <Meter aqi={aqi} />
             <ChartApp />
-            <div className="info-box">
-
-                <div className="column">
-                    <Info aqi={aqi} />
-                </div>
+        </div>
+        <div className="info-box">
+            <div className="column">
+                <Info aqi={aqi} />
             </div>
         </div>
     </div>
