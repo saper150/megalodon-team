@@ -19,7 +19,8 @@ export const askForPermissioToReceiveNotifications = () => {
     if (permission === 'granted') {
       console.log('Notification permission granted.');
       messaging.getToken().then(token => {
-		  return firebase.firestore().collection('notificationToken').add({ token: token })
+		
+		  return firebase.firestore().collection('notificationToken').doc(token).set({ yes: 'yes' })
       }).catch(err => {
         console.log(err)
       })
@@ -34,7 +35,7 @@ const messaging = firebase.messaging()
 
 messaging.onTokenRefresh(() => {
 	messaging.getToken().then((refreshedToken) => {
-		return firebase.firestore().collection('notificationToken').add({ token: refreshedToken })
+		return firebase.firestore().collection('notificationToken').doc(refreshedToken).set({ yes: 'yes' })
 	}).catch((err) => {
 	  console.log('Unable to retrieve refreshed token ', err);
 	});
@@ -42,10 +43,10 @@ messaging.onTokenRefresh(() => {
 
 
 
-askForPermissioToReceiveNotifications()
 
 
 navigator.serviceWorker.register('./sw.js')
   .then((registration) => {
-    firebase.messaging().useServiceWorker(registration)
+	firebase.messaging().useServiceWorker(registration)
+	askForPermissioToReceiveNotifications()
 })
