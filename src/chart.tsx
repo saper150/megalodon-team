@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './chart.css'
 const options = {
 	options: {
@@ -47,16 +47,30 @@ const options = {
   }
 }
 
-
-interface Polution {
-
+function firebaseToArray(snapshot) {
+	const res = []
+	snapshot.forEach((doc) => {
+		const obj = doc.data()
+		obj.id = doc.id
+		res.push(obj)
+	})
+	return res
 }
 
 import Chart from 'react-apexcharts'
+import firebase from 'firebase'
 
 
 export function ChartApp(data) {
-	console.log(data)
+
+	const [state, setState] = useState([])
+
+	useEffect(() => {
+		firebase.firestore().collection('measurements').onSnapshot(snapshot => {
+			setState(firebaseToArray(snapshot))
+		})
+	})
+
 
 	return <div className="chart-container">
 		<Chart options={options} series={options.series} type="line" width="100%" height="100%"></Chart>

@@ -1,5 +1,14 @@
 import firebase from 'firebase'
 
+firebase.initializeApp({
+    apiKey: "AIzaSyAZ4QnplsUIAHZR0SxP7GiobHXpB3_sXUY",
+    authDomain: "megalodon-a76cd.firebaseapp.com",
+    databaseURL: "https://megalodon-a76cd.firebaseio.com",
+    projectId: "megalodon-a76cd",
+    storageBucket: "",
+    messagingSenderId: "680495446953",
+    appId: "1:680495446953:web:895c9dcabc82d19f27a2b8"
+})
 
 export const askForPermissioToReceiveNotifications = () => {
 
@@ -10,9 +19,9 @@ export const askForPermissioToReceiveNotifications = () => {
     if (permission === 'granted') {
       console.log('Notification permission granted.');
       messaging.getToken().then(token => {
-        console.log(token)
-      }).catch(() => {
-        console.log('ssssssssssssssssssssssssssssss')
+		  return firebase.firestore().collection('notificationToken').add({ token: token })
+      }).catch(err => {
+        console.log(err)
       })
 
     } else {
@@ -21,15 +30,19 @@ export const askForPermissioToReceiveNotifications = () => {
   })
 }
 
-firebase.initializeApp({
-    apiKey: "AIzaSyAZ4QnplsUIAHZR0SxP7GiobHXpB3_sXUY",
-    authDomain: "megalodon-a76cd.firebaseapp.com",
-    databaseURL: "https://megalodon-a76cd.firebaseio.com",
-    projectId: "megalodon-a76cd",
-    storageBucket: "",
-    messagingSenderId: "680495446953",
-    appId: "1:680495446953:web:895c9dcabc82d19f27a2b8"
-})
+const messaging = firebase.messaging()
+
+messaging.onTokenRefresh(() => {
+	messaging.getToken().then((refreshedToken) => {
+		return firebase.firestore().collection('notificationToken').add({ token: refreshedToken })
+	}).catch((err) => {
+	  console.log('Unable to retrieve refreshed token ', err);
+	});
+  });
+
+
+
+askForPermissioToReceiveNotifications()
 
 
 navigator.serviceWorker.register('./sw.js')

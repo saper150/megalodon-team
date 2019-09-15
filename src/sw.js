@@ -19,3 +19,7 @@ messaging.setBackgroundMessageHandler(payload => {
   
     return self.registration.showNotification(notificationTitle, notificationOptions)
 })
+
+self.addEventListener('fetch', event => {
+	event.respondWith(fetch(event.request))
+})
