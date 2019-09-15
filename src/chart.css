@@ -1,5 +1,6 @@
 
 .chart-container {
-	width: 90vw;
-	overflow-x: auto;
+	width: 98vw;
+	position: relative;
+	left: -20px;
 }
