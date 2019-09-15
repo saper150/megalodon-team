@@ -88,11 +88,11 @@ export class ChartApp extends Component {
 				},
 				series: [
 					{
-						name: 'pm10',
+						name: 'pm 10',
 						data: pm10,
 					},
 					{
-						name: 'pm20',
+						name: 'pm 2,5',
 						data: pm25,
 					}
 				]

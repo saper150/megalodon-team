@@ -27,7 +27,7 @@ messaging.setBackgroundMessageHandler(payload => {
     // Customize notification here
     const notificationTitle = 'Stan powietrza na jutro:';
     const notificationOptions = {
-      body: levels[Math.max(Math.ceil(aqi / 20) - 1, 0)],
+      body: levels[Math.max(Math.ceil(payload.aqi / 20) - 1, 0)],
       icon: '/cloud.svg'
     };
   
