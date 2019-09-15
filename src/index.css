@@ -14,7 +14,6 @@ html, body {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 15px;
 }
 
 .test {
@@ -23,4 +22,13 @@ html, body {
 
 h1 {
     text-align: center;
+}
+
+.info-box {
+    display: flex;
+    flex: 1;
+}
+.info {
+    display: flex;
+    justify-content: center;
 }

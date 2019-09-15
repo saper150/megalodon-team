@@ -1,16 +1,42 @@
 import React from 'react'
 
+interface ILevel {
+    info: string
+    notify: string
+}
+
+const levels: ILevel[] = [
+    {
+        info: 'Dobrze',
+        notify: 'Warto wyjść na spacer'
+    },
+    {
+        info: 'Ok',
+        notify: 'Przeciętnie'
+    },
+    {
+        info: 'Nie bardzo',
+        notify: 'Powietrze jest troche zanieczyszczone'
+    },
+    {
+        info: 'Zanieczyszczone',
+        notify: 'Powietrze jest zanieczyszczone'
+    },
+    {
+        info: 'Duże zanieczyszczenie',
+        notify: 'Ogromne zanieczyszczenie powietrza'
+    }
+]
+
+
+export function mapAqiToInfo(aqi) {
+    return levels[Math.max(Math.ceil(aqi / 20) - 1, 0)]
+}
+
+console.log(mapAqiToInfo(0.2).notify)
 
 export function Info(data) {
-    if (data.aqi < 20) {
-        return <h1>Dobrze</h1>
-    } else if (data.aqi < 40) {
-        return <h1>Ok</h1>
-    } else if (data.aqi < 60) {
-        return <h1>Nie bardzo</h1>
-    } else if (data.aqi < 80) {
-        return <h1>Zanieczyszczone</h1>
-    } else {
-        return <h1>Syf</h1>
-    }
+    return <div className="info">
+        <h1>{mapAqiToInfo(data.aqi).info}</h1>
+    </div>
 }

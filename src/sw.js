@@ -6,6 +6,8 @@ firebase.initializeApp({
   'messagingSenderId': '680495446953'
 })
 
+import { mapAqiToInfo } from './info'
+
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(payload => {
@@ -13,8 +15,8 @@ messaging.setBackgroundMessageHandler(payload => {
     // Customize notification here
     const notificationTitle = 'Background Message Title';
     const notificationOptions = {
-      body: 'Background Message body.',
-      icon: '/firebase-logo.png'
+      body: mapAqiToInfo(payload.aqi),
+      icon: '/assets/cloud.svg'
     };
   
     return self.registration.showNotification(notificationTitle, notificationOptions)
