@@ -44,7 +44,8 @@ export class ChartApp extends Component {
 			let arr = firebaseToArray(snapshot)
 			arr = arr.sort((a, b) => {
 				return ('' + a.measurement_date).localeCompare(b.measurement_date)
-			}).filter((x, i) => i % 2)
+			})
+			.filter((x, i) => i % 2)
 
 			const xaxis = arr.map(el => {
 
@@ -54,14 +55,36 @@ export class ChartApp extends Component {
 			const pm10 = arr.map(el => el.pm10)
 			const pm25 = arr.map(el => el.pm25)
 
+			// const a = xaxis.map((x) => {
+			// 		return {
+			// 			x: x,
+			// 			label: {
+			// 				borderColor: '#775DD0',
+			// 				style: {
+			// 				  color: '#fff',
+			// 				  background: '#775DD0',
+			// 				},
+			// 				text: 'Teraz',
+			// 			}
+			// 	} else {
+			// 		return {
+			// 			x: x,
+			// 		}
+			// 	}
+
+			// })
+
 			this.setState({
 				options: {
 				...this.state.options,
-
+				yaxis: {
+					max: 200,
+				},
 				xaxis: {
 					...this.state.options.xaxis,
-					categories: xaxis
-					}
+					categories: xaxis,
+					labels: { show: true },
+				}
 				},
 				series: [
 					{
