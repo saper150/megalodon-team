@@ -2,14 +2,9 @@ import React from 'react'
 import './meter.css'
 import cloud from '../assets/cloud.svg'
 
-function clamp(value) {
-    return Math.max(0, Math.min(99, value))
-}
-
 export function Meter(data) {
-    const clamped = clamp(data.aqi)
     const arrowStyle = {
-        top: `calc(${clamped}% - ${clamped > 90 ? 30 : 0}px`
+        top: `calc(${100 - data.aqi}% - ${100 - data.aqi > 90 ? 30 : 0}px`
     }
     return <React.Fragment>
     <div className="meter">
