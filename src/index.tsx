@@ -7,6 +7,11 @@ import './notifications'
 import { askForPermissioToReceiveNotifications } from './notifications';
 import { ChartApp } from './chart';
 import { Meter } from './meter'
+import { Info } from './info'
+
+function clamp(value) {
+    return Math.max(0, Math.min(99, value))
+}
 
 function App() {
 
@@ -37,16 +42,19 @@ function App() {
         console.log('runs on create')
     })
 
+    const updateAqi = value => { setAqi(clamp(value)) }
+
     return <div className="layout-main">
         <Meter aqi={aqi} />
         <div className="column">
             <ChartApp />
+            <Info aqi={aqi} />
             <div className="test">
                 <button onClick={() => askForPermissioToReceiveNotifications()}>o kurde</button>
                 <button onClick={() => send()}>o kurde2</button>
-                { aqi }
-                <button onClick={() => setAqi(aqi + 10)}>test meter (+10)</button>
-                <button onClick={() => setAqi(aqi - 10)}>test meter (-10)</button>
+                {aqi}
+                <button onClick={() => updateAqi(aqi + 10)}>test meter (+10)</button>
+                <button onClick={() => updateAqi(aqi - 10)}>test meter (-10)</button>
             </div>
         </div>
     </div>

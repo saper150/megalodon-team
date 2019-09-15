@@ -21,3 +21,15 @@
 .arrow > img {
   max-height: 30px;
 }
+
+.particle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('../assets/particle.png');
+    z-index: -1;
+    transition: 0.3s all ease-in;
+    opacity: .3;
+    pointer-events: none;
+}
