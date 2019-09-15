@@ -36,9 +36,9 @@ function App() {
 
     return <div className="layout-main">
         <div className="column">
+            <Meter aqi={aqi} />
             <ChartApp />
             <div className="info-box">
-                <Meter aqi={aqi} />
 
                 <div className="column">
                     <Info aqi={aqi} />
