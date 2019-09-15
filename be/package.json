@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "firebase-admin": "^8.5.0"
+=======
+    "express": "^4.17.1"
+>>>>>>> 939dc027f2352e28325e793137379c1adc4bdd2e
   }
 }
