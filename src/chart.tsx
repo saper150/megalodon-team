@@ -1,50 +1,35 @@
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Component } from 'react'
 import './chart.css'
-const options = {
-	options: {
-	  chart: {
-			zoom: {
-				enabled: false
-			}
-		},
-		dataLabels: {
-			enabled: false
-		},
-		stroke: {
-			curve: 'straight'
-		},
-		title: {
-			text: 'Product Trends by Month',
-			align: 'left'
-		},
-		grid: {
-			row: {
-				colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-				opacity: 0.5
-			},
-		},
-		xaxis: {
-			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-		},
-		plotOptions: {
-			bar: {
-				distributed: true,
-				horizontal: true,
-			}
+
+const defaultOptions = {
+	grid: {
+		row: {
+			colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+			opacity: 0.5
 		},
 	},
-	series: [
-		{
-			name: "Desktops",
-			data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+	chart: {
+		zoom: {
+			enabled: true,
+			type: 'x',
+			autoScaleYaxis: false,
+			zoomedArea: {
+			  fill: {
+				color: '#90CAF9',
+				opacity: 0.4
+			  },
+			  stroke: {
+				color: '#0D47A1',
+				opacity: 0.4,
+				width: 1
+			  }
+			}
 		},
-		{
-			name: "ddd",
-			data: [10, 41, 35, 51, 36, 89, 78, 14, 25]
+		toolbar: {
+			show: false,
 		}
-	],
-  }
+	},
 }
 
 function firebaseToArray(snapshot) {
@@ -59,20 +44,77 @@ function firebaseToArray(snapshot) {
 
 import Chart from 'react-apexcharts'
 import firebase from 'firebase'
+import { DateTime } from 'luxon'
 
+export class ChartApp extends Component {
+	constructor(props) {
+	  super(props);
+	  this.state = {
+		options: {
+			chart: {
+				id: 'apexchart-example',
+				toolbar: {
+					show: false,
+				},
+				zoom: {
+					enabled: false,
+				},
+			},
+			xaxis: {
+				categories: [],
+			},
+		},
+		series: []
+	  }
+	}
 
-export function ChartApp(data) {
-
-	const [state, setState] = useState([])
-
-	useEffect(() => {
+	componentDidMount() {
 		firebase.firestore().collection('measurements').onSnapshot(snapshot => {
-			setState(firebaseToArray(snapshot))
+			const arr = firebaseToArray(snapshot)
+			arr.sort((a, b) => {
+				return ('' + a.measurement_date).localeCompare(b.measurement_date)
+			})
+
+			const xaxis = arr.map(el => {
+
+				return Math.round(
+					DateTime.fromISO(el.measurement_date).diffNow('hour').hours
+				)
+			})
+			console.log(xaxis)
+			const pm10 = arr.map(el => el.pm10)
+			const pm25 = arr.map(el => el.pm25)
+
+			this.setState({
+				options: {
+				...this.state.options,
+
+				xaxis: {
+					...this.state.options.xaxis,
+					categories: xaxis
+					}
+				},
+				series: [
+					{
+						name: 'pm10',
+						data: pm10,
+					},
+					{
+						name: 'pm20',
+						data: pm25,
+					}
+				]
+			})
+
 		})
-	})
 
+	}
 
-	return <div className="chart-container">
-		<Chart options={options} series={options.series} type="line" width="100%" height="100%"></Chart>
-	</div>
-}
+	render() {
+	  return (
+		<div className="chart-container">
+			<Chart options={this.state.options} series={this.state.series} type="line" width="1000px" height={500} />
+		</div>
+	  )
+	}
+  }
