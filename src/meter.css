@@ -1,32 +1,23 @@
 .meter {
-    background: gray;
-    width: 80px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-.meter-part {
-    height: calc(100%/3);
-}
-
-.good {
-    background: #6df36d;
-}
-
-.warning {
-    background: #f1b506;
-}
-
-.alert {
-    background: #b30909;
+  background: gray;
+  min-width: 30px;
+  width: 30px;
+  height: 100%;
+  position: relative;
+  background: #e8416f;
+  background: -moz-linear-gradient(top,  #e8416f 10%, #f29305 30%, #eec20b 50%, #bbcf4c 70%, #79bc6a 90%);
+  background: -webkit-linear-gradient(top,  #e8416f 10%,#f29305 30%,#eec20b 50%,#bbcf4c 70%,#79bc6a 90%);
+  background: linear-gradient(to bottom,  #e8416f 10%,#f29305 30%,#eec20b 50%,#bbcf4c 70%,#79bc6a 90%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8416f', endColorstr='#79bc6a',GradientType=0 );
 }
 
 .arrow {
-    position: absolute;
-    right: 0;
-    height: 20px;
-    width: 65%;
-    background: black;
+  position: absolute;
+  right: 0;
+  height: 30px;
+  transition: 0.3s all ease-in;
+}
+
+.arrow > img {
+  max-height: 30px;
 }
