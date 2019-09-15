@@ -24,8 +24,10 @@ function mapAqiToInfo(aqi) {
 
 messaging.setBackgroundMessageHandler(payload => {
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+    const data = JSON.parse(payload.data.notification)
+    console.log(data)
     // Customize notification here
-    const notificationTitle = 'Stan powietrza na jutro: ' + levels[Math.max(Math.ceil(payload.aqi / 20) - 1, 0)];
+    const notificationTitle = 'Stan powietrza na jutro: ' + levels[Math.max(Math.ceil(data.agi / 20) - 1, 0)];
     const notificationOptions = {
       icon: '/cloud.svg'
     };
