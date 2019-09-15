@@ -35,13 +35,13 @@ function App() {
     }, [])
 
     return <div className="layout-main">
-        <div className="column">
+        <div className="flex">
             <Meter aqi={aqi} />
             <ChartApp />
-            <div className="info-box">
-                <div className="column">
-                    <Info aqi={aqi} />
-                </div>
+        </div>
+        <div className="info-box">
+            <div className="column">
+                <Info aqi={aqi} />
             </div>
         </div>
     </div>
