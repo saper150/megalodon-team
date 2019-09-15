@@ -7,36 +7,43 @@ interface ILevel {
 
 const levels: ILevel[] = [
     {
-        info: 'Dobrze',
-        notify: 'Warto wyjść na spacer'
+        info: 'Czyste powietrze',
+        notify: 'Warto wyjść na spacer na świeżym powietrzu'
     },
     {
-        info: 'Ok',
-        notify: 'Przeciętnie'
+        info: 'Niskie zanieczyszczenie',
+        notify: 'Jakoś powietrza jest dobra'
     },
     {
-        info: 'Nie bardzo',
+        info: 'Przeciętne zanieczyszczenie',
         notify: 'Powietrze jest troche zanieczyszczone'
     },
     {
-        info: 'Zanieczyszczone',
+        info: 'Zanieczyszczone powietrze',
         notify: 'Powietrze jest zanieczyszczone'
     },
     {
-        info: 'Duże zanieczyszczenie',
-        notify: 'Ogromne zanieczyszczenie powietrza'
+        info: 'Duże zanieczyszczenie powietrza',
+        notify: 'Powietrze jest szkodliwe'
     }
 ]
 
 
-export function mapAqiToInfo(aqi) {
+function mapAqiToInfo(aqi) {
     return levels[Math.max(Math.ceil(aqi / 20) - 1, 0)]
 }
 
 console.log(mapAqiToInfo(0.2).notify)
 
 export function Info(data) {
+    const air = mapAqiToInfo(data.aqi)
     return <div className="info">
-        <h1>{mapAqiToInfo(data.aqi).info}</h1>
+        <h1>
+            Aktualy stan:
+            <br/>
+            {air.info}
+            <br />
+            {air.notify}
+        </h1>
     </div>
 }

@@ -6,17 +6,29 @@ firebase.initializeApp({
   'messagingSenderId': '680495446953'
 })
 
-import { mapAqiToInfo } from './info'
 
 const messaging = firebase.messaging();
+
+const levels = [
+      'Czyste powietrze',
+      'Niskie zanieczyszczenie',
+      'Przeciętne zanieczyszczenie',
+      'Zanieczyszczone powietrze',
+      'Duże zanieczyszczenie powietrza',
+]
+
+
+function mapAqiToInfo(aqi) {
+  return levels[Math.max(Math.ceil(aqi / 20) - 1, 0)]
+}
 
 messaging.setBackgroundMessageHandler(payload => {
     console.log('[firebase-messaging-sw.js] Received background message ', payload);
     // Customize notification here
-    const notificationTitle = 'Background Message Title';
+    const notificationTitle = 'Stan powietrza na jutro:';
     const notificationOptions = {
-      body: mapAqiToInfo(payload.aqi),
-      icon: '/assets/cloud.svg'
+      body: levels[Math.max(Math.ceil(aqi / 20) - 1, 0)],
+      icon: '/cloud.svg'
     };
   
     return self.registration.showNotification(notificationTitle, notificationOptions)
