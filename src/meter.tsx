@@ -1,6 +1,6 @@
 import React from 'react'
 import './meter.css'
-import cloud from '../assets/cloud.svg'
+import cloud from '../static/cloud.svg'
 
 export function Meter(data) {
     const arrowStyle = {

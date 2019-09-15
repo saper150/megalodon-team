@@ -3,7 +3,7 @@ html, body {
     margin: 0;
 }
 * {
-    font-family: 'Chilanka', cursive !important;
+    font-family: 'Montserrat', sans-serif;
 }
 .layout-main {
     display: flex;
@@ -23,6 +23,7 @@ html, body {
 
 h1 {
     text-align: center;
+    font-weight: normal;
 }
 
 .info-box {
