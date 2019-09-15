@@ -9,11 +9,14 @@ function clamp(value) {
 export function Meter(data) {
     const clamped = clamp(data.aqi)
     const arrowStyle = {
-        top: `calc(${clamped}% - ${clamped > 90 ? 52 : 0}px`
+        top: `calc(${clamped}% - ${clamped > 90 ? 30 : 0}px`
     }
-    return <div className="meter">
+    return <React.Fragment>
+    <div className="meter">
         <div className="arrow" style={arrowStyle}>
             <img src={cloud} />
         </div>
     </div>
+    <div className="particle" style={arrowStyle}></div>
+    </React.Fragment>
 }
