@@ -5,6 +5,7 @@ import './index.css'
 
 import './notifications'
 import { askForPermissioToReceiveNotifications } from './notifications';
+import { ChartApp } from './chart';
 
 function App() {
 
@@ -41,6 +42,7 @@ function App() {
         <button onClick={() => send()}>o kurde2</button>
         {counter}
         <button onClick={() => setCounter(counter + 1)}>inc counter</button>
+		<ChartApp />
     </div>
 }
 
