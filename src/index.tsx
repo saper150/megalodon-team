@@ -6,6 +6,7 @@ import './index.css'
 import './notifications'
 import { askForPermissioToReceiveNotifications } from './notifications';
 import { ChartApp } from './chart';
+import { Meter } from './meter'
 
 function App() {
 
@@ -31,18 +32,23 @@ function App() {
 
     }
 
-    const [counter, setCounter] = React.useState(1)
+    const [aqi, setAqi] = React.useState(50)
     React.useEffect(() => {
         console.log('runs on create')
     })
 
-
-    return <div>
-        <button onClick={() => askForPermissioToReceiveNotifications()}>o kurde</button>
-        <button onClick={() => send()}>o kurde2</button>
-        {counter}
-        <button onClick={() => setCounter(counter + 1)}>inc counter</button>
-		<ChartApp />
+    return <div className="layout-main">
+        <Meter aqi={aqi} />
+        <div className="column">
+            <ChartApp />
+            <div className="test">
+                <button onClick={() => askForPermissioToReceiveNotifications()}>o kurde</button>
+                <button onClick={() => send()}>o kurde2</button>
+                { aqi }
+                <button onClick={() => setAqi(aqi + 10)}>test meter (+10)</button>
+                <button onClick={() => setAqi(aqi - 10)}>test meter (-10)</button>
+            </div>
+        </div>
     </div>
 }
 
